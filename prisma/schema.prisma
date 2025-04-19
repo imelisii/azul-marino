@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -9,51 +9,52 @@ datasource db {
 }
 
 model actividades {
-  id            Int             @id(map: "PK__activida__3213E83FA3B5A115") @default(autoincrement())
+  id            Int             @id @default(autoincrement())
   nombre        String          @db.VarChar(100)
   descripcion   String?         @db.Text
   precio        Decimal         @db.Decimal(10, 2)
-  activa        Boolean?        @default(true, map: "DF__actividad__activ__3F466844")
+  activa        Boolean?        @default(true)
   inscripciones inscripciones[]
 }
 
 model familias {
-  id             Int      @id(map: "PK__familias__3213E83FDACE99F6") @default(autoincrement())
+  id             Int      @id @default(autoincrement())
   nombre_familia String   @db.VarChar(100)
-  fecha_alta     DateTime @default(now(), map: "DF__familias__fecha___37A5467C") @db.Date
+  fecha_alta     DateTime @default(now()) @db.Date
   socios         socios[]
 }
 
 model inscripciones {
-  id                Int          @id(map: "PK__inscripc__3213E83FAA80E67E") @default(autoincrement())
+  id                Int          @id @default(autoincrement())
   id_socio          Int?
   id_actividad      Int?
-  fecha_inscripcion DateTime     @default(now(), map: "DF__inscripci__fecha__440B1D61") @db.Date
-  pagado            Boolean?     @default(false, map: "DF__inscripci__pagad__44FF419A")
+  fecha_inscripcion DateTime     @default(now()) @db.Date
+  pagado            Boolean?     @default(false)
   fecha_pago        DateTime?    @db.Date
-  actividades       actividades? @relation(fields: [id_actividad], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__inscripci__id_ac__4316F928")
-  socios            socios?      @relation(fields: [id_socio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__inscripci__id_so__4222D4EF")
+  actividades       actividades? @relation(fields: [id_actividad], references: [id])
+  socios            socios?      @relation(fields: [id_socio], references: [id])
 }
 
 model saldos {
-  id              Int      @id(map: "PK__saldos__3213E83FF6098CC4") @default(autoincrement())
+  id              Int      @id @default(autoincrement())
   id_socio        Int?
   descripcion     String   @db.Text
   monto           Decimal  @db.Decimal(10, 2)
-  fecha           DateTime @default(now(), map: "DF__saldos__fecha__48CFD27E") @db.Date
-  tipo_movimiento String?  @db.VarChar(10)
-  socios          socios?  @relation(fields: [id_socio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__saldos__id_socio__47DBAE45")
+  fecha           DateTime @default(now()) @db.Date
+  tipo_movimiento String?  @db.NVarChar(255)
+  socios          socios?  @relation(fields: [id_socio], references: [id])
 }
 
 model socios {
-  id               Int             @id(map: "PK__socios__3213E83FBB31409F") @default(autoincrement())
+  id               Int             @id @default(autoincrement())
   id_familia       Int?
   nombre           String          @db.VarChar(100)
   apellido         String          @db.VarChar(100)
-  dni              String          @unique(map: "UQ__socios__D87608A7E7AD00F7") @db.VarChar(20)
+  dni              String          @unique @db.VarChar(20)
   fecha_nacimiento DateTime?       @db.Date
-  activo           Boolean?        @default(true, map: "DF__socios__activo__3C69FB99")
+  celular          String?         @db.NVarChar(50)
+  activo           Boolean?        @default(true)
   inscripciones    inscripciones[]
   saldos           saldos[]
-  familias         familias?       @relation(fields: [id_familia], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK__socios__id_famil__3B75D760")
+  familias         familias?       @relation(fields: [id_familia], references: [id])
 }

@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model actividades {
+  id            Int             @id @default(autoincrement())
+  nombre        String          @db.VarChar(100)
+  descripcion   String?         @db.Text
+  precio        Decimal         @db.Decimal(10, 2)
+  activa        Boolean?        @default(true)
+  inscripciones inscripciones[]
+}
+
+model familias {
+  id             Int      @id @default(autoincrement())
+  nombre_familia String   @db.VarChar(100)
+  fecha_alta     DateTime @default(now()) @db.Date
+  socios         socios[]
+}
+
+model inscripciones {
+  id                Int          @id @default(autoincrement())
+  id_socio          Int?
+  id_actividad      Int?
+  fecha_inscripcion DateTime     @default(now()) @db.Date
+  pagado            Boolean?     @default(false)
+  fecha_pago        DateTime?    @db.Date
+  actividades       actividades? @relation(fields: [id_actividad], references: [id])
+  socios            socios?      @relation(fields: [id_socio], references: [id])
+}
+
+model saldos {
+  id              Int      @id @default(autoincrement())
+  id_socio        Int?
+  descripcion     String   @db.Text
+  monto           Decimal  @db.Decimal(10, 2)
+  fecha           DateTime @default(now()) @db.Date
+  tipo_movimiento String?  @db.NVarChar(255)
+  socios          socios?  @relation(fields: [id_socio], references: [id])
+}
+
+model socios {
+  id               Int             @id @default(autoincrement())
+  id_familia       Int?
+  nombre           String          @db.VarChar(100)
+  apellido         String          @db.VarChar(100)
+  dni              String          @unique @db.VarChar(20)
+  fecha_nacimiento DateTime?       @db.Date
+  celular          String?         @db.NVarChar(50)
+  activo           Boolean?        @default(true)
+  inscripciones    inscripciones[]
+  saldos           saldos[]
+  familias         familias?       @relation(fields: [id_familia], references: [id])
+}
