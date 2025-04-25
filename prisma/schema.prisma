@@ -15,6 +15,7 @@ model actividades {
   precio        Decimal         @db.Decimal(10, 2)
   activa        Boolean?        @default(true)
   inscripciones inscripciones[]
+  carnet        carnet[]
 }
 
 model familias {
@@ -58,6 +59,7 @@ model socios {
   inscripciones    inscripciones[]
   saldos           saldos[]
   familias         familias?       @relation(fields: [id_familia], references: [id])
+  carnet           carnet[]
 }
 
 model caja {
@@ -68,4 +70,14 @@ model caja {
   fecha          DateTime @default(now()) @db.Date
   monto          Decimal  @db.Decimal(10, 2)
   descripcion    String   @db.NVarChar(255)
+}
+
+model carnet {
+  id           Int         @id @default(autoincrement())
+  id_socio     Int
+  id_actividad Int
+  fecha        DateTime    @default(now()) @db.Date
+  fecha_vto    DateTime    @db.Date
+  socios       socios      @relation(fields: [id_socio], references: [id])
+  actividades  actividades @relation(fields: [id_actividad], references: [id])
 }

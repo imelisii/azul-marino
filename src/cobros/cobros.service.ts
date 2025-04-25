@@ -3,9 +3,17 @@ import { CreateCobroDto } from './dto/create-cobro.dto';
 import { UpdateCobroDto } from './dto/update-cobro.dto';
 import { PrismaClient } from 'generated/prisma';
 import { inscripciones } from '../../generated/prisma/index';
+import { WhatsappService } from 'src/whatsapp/whatsapp.service';
 
 @Injectable()
 export class CobrosService extends PrismaClient {
+
+
+  constructor( ) {
+    super()
+  }
+
+
 
   async create(createCobroDto: CreateCobroDto) {
     const { socioId, actividadId, metodoPago, aCuentaDe, monto } = createCobroDto;
@@ -36,9 +44,17 @@ export class CobrosService extends PrismaClient {
         }
       })
 
+
+
+      //await this.WhatsappService.sendMessage(`Se ha creado la cobranza de ${monto} para el socio ${socio?.nombre} en la actividad ${actividad.descripcion}`, socio?.celular!)
+
       return `Se ha creado la cobranza de ${monto} para el socio ${socio?.nombre} en la actividad ${actividad.descripcion}`;
 
+      
+
     })
+
+    
 
   }
 

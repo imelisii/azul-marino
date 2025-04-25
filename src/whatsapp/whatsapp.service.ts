@@ -20,7 +20,7 @@ export class WhatsappService extends PrismaClient implements OnModuleInit {
         this.client = new Client({
             authStrategy: new LocalAuth(),
             puppeteer: {
-                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+
                 headless: true
             },
         });
@@ -35,10 +35,15 @@ export class WhatsappService extends PrismaClient implements OnModuleInit {
         });
 
         this.client.on('message', async (msg) => {
-          
+
         });
     }
 
 
-   
+    async sendMessage (message: string, number: string) {
+        this.client.sendMessage(`549${number}@c.us`, message)
+    }
+
+
+
 }
