@@ -30,20 +30,20 @@ model inscripciones {
   id_actividad      Int?
   fecha_inscripcion DateTime     @default(now()) @db.Date
   monto             Int          @db.Int
-  pagado            Boolean?     @default(false)
-  fecha_pago        DateTime?    @db.Date
   actividades       actividades? @relation(fields: [id_actividad], references: [id])
   socios            socios?      @relation(fields: [id_socio], references: [id])
 }
 
 model saldos {
-  id              Int      @id @default(autoincrement())
-  id_socio        Int?
-  descripcion     String   @db.Text
-  monto           Decimal  @db.Decimal(10, 2)
-  fecha           DateTime @default(now()) @db.Date
-  tipo_movimiento String?  @db.NVarChar(255)
-  socios          socios?  @relation(fields: [id_socio], references: [id])
+  id          Int       @id @default(autoincrement())
+  id_socio    Int?
+  pagado      Boolean?  @default(false)
+  fecha_pago  DateTime? @db.Date
+  descripcion String    @db.Text
+  monto       Decimal   @db.Decimal(10, 2)
+  fecha       DateTime  @default(now()) @db.Date
+  medioDePago String?   @db.NVarChar(255)
+  socios      socios?   @relation(fields: [id_socio], references: [id])
 }
 
 model socios {
@@ -58,4 +58,14 @@ model socios {
   inscripciones    inscripciones[]
   saldos           saldos[]
   familias         familias?       @relation(fields: [id_familia], references: [id])
+}
+
+model caja {
+  id             Int      @id @default(autoincrement())
+  tipoMovimiento String   @db.VarChar(50)
+  cuenta         String?  @db.VarChar(50)
+  medioPago      String   @db.VarChar(50)
+  fecha          DateTime @default(now()) @db.Date
+  monto          Decimal  @db.Decimal(10, 2)
+  descripcion    String   @db.NVarChar(255)
 }

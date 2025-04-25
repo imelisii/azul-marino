@@ -13,7 +13,7 @@ export class CobrosController {
 
   @Post()
   create(@Body() createCobroDto: CreateCobroDto) {
-    console.log('createCobroDto', createCobroDto);
+    return this.cobrosService.create(createCobroDto);
   }
   @Post('/partes')
   createCobro(@Body() createCobroDto: CreateCobroDto) {

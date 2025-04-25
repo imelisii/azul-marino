@@ -1,12 +1,45 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateCobroDto } from './dto/create-cobro.dto';
 import { UpdateCobroDto } from './dto/update-cobro.dto';
 import { PrismaClient } from 'generated/prisma';
+import { inscripciones } from '../../generated/prisma/index';
 
 @Injectable()
 export class CobrosService extends PrismaClient {
-  create(createCobroDto: CreateCobroDto) {
-    return 'This action adds a new cobro';
+
+  async create(createCobroDto: CreateCobroDto) {
+    const { socioId, actividadId, metodoPago, aCuentaDe, monto } = createCobroDto;
+
+    const actividad = await this.actividades.findUnique({ where: { id: actividadId } })
+    const socio = await this.socios.findUnique({ where: { id: socioId } })
+
+
+    if (!actividad) return new BadRequestException(`No existe la actividad con id ${actividadId}`)
+
+
+    return this.$transaction(async (prisma) => {
+      await prisma.inscripciones.create({
+        data: {
+          monto,
+          id_actividad: actividadId,
+          id_socio: socioId
+        }
+      })
+
+      await prisma.caja.create({
+        data: {
+          monto,
+          medioPago: metodoPago,
+          descripcion: actividad.descripcion ?? '',
+          tipoMovimiento: 'INGRESO',
+          cuenta: aCuentaDe,
+        }
+      })
+
+      return `Se ha creado la cobranza de ${monto} para el socio ${socio?.nombre} en la actividad ${actividad.descripcion}`;
+
+    })
+
   }
 
   findAll() {

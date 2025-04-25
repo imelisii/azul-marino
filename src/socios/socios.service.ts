@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateSocioDto } from './dto/create-socio.dto';
 import { UpdateSocioDto } from './dto/update-socio.dto';
 import { PrismaClient } from 'generated/prisma';
-import { actividades, inscripciones } from '../../generated/prisma/index';
+
 
 @Injectable()
 export class SociosService extends PrismaClient {
@@ -24,7 +24,7 @@ export class SociosService extends PrismaClient {
             monto: true,
             descripcion: true,
             fecha: true,
-            tipo_movimiento: true,
+            medioDePago: true,
           },
         },
         inscripciones: {
