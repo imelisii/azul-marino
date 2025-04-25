@@ -137,6 +137,7 @@ exports.Prisma.InscripcionesScalarFieldEnum = {
   id_socio: 'id_socio',
   id_actividad: 'id_actividad',
   fecha_inscripcion: 'fecha_inscripcion',
+  monto: 'monto',
   pagado: 'pagado',
   fecha_pago: 'fecha_pago'
 };

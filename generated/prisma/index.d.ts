@@ -3268,12 +3268,14 @@ export namespace Prisma {
     id: number | null
     id_socio: number | null
     id_actividad: number | null
+    monto: number | null
   }
 
   export type InscripcionesSumAggregateOutputType = {
     id: number | null
     id_socio: number | null
     id_actividad: number | null
+    monto: number | null
   }
 
   export type InscripcionesMinAggregateOutputType = {
@@ -3281,6 +3283,7 @@ export namespace Prisma {
     id_socio: number | null
     id_actividad: number | null
     fecha_inscripcion: Date | null
+    monto: number | null
     pagado: boolean | null
     fecha_pago: Date | null
   }
@@ -3290,6 +3293,7 @@ export namespace Prisma {
     id_socio: number | null
     id_actividad: number | null
     fecha_inscripcion: Date | null
+    monto: number | null
     pagado: boolean | null
     fecha_pago: Date | null
   }
@@ -3299,6 +3303,7 @@ export namespace Prisma {
     id_socio: number
     id_actividad: number
     fecha_inscripcion: number
+    monto: number
     pagado: number
     fecha_pago: number
     _all: number
@@ -3309,12 +3314,14 @@ export namespace Prisma {
     id?: true
     id_socio?: true
     id_actividad?: true
+    monto?: true
   }
 
   export type InscripcionesSumAggregateInputType = {
     id?: true
     id_socio?: true
     id_actividad?: true
+    monto?: true
   }
 
   export type InscripcionesMinAggregateInputType = {
@@ -3322,6 +3329,7 @@ export namespace Prisma {
     id_socio?: true
     id_actividad?: true
     fecha_inscripcion?: true
+    monto?: true
     pagado?: true
     fecha_pago?: true
   }
@@ -3331,6 +3339,7 @@ export namespace Prisma {
     id_socio?: true
     id_actividad?: true
     fecha_inscripcion?: true
+    monto?: true
     pagado?: true
     fecha_pago?: true
   }
@@ -3340,6 +3349,7 @@ export namespace Prisma {
     id_socio?: true
     id_actividad?: true
     fecha_inscripcion?: true
+    monto?: true
     pagado?: true
     fecha_pago?: true
     _all?: true
@@ -3436,6 +3446,7 @@ export namespace Prisma {
     id_socio: number | null
     id_actividad: number | null
     fecha_inscripcion: Date
+    monto: number
     pagado: boolean | null
     fecha_pago: Date | null
     _count: InscripcionesCountAggregateOutputType | null
@@ -3464,6 +3475,7 @@ export namespace Prisma {
     id_socio?: boolean
     id_actividad?: boolean
     fecha_inscripcion?: boolean
+    monto?: boolean
     pagado?: boolean
     fecha_pago?: boolean
     actividades?: boolean | inscripciones$actividadesArgs<ExtArgs>
@@ -3477,11 +3489,12 @@ export namespace Prisma {
     id_socio?: boolean
     id_actividad?: boolean
     fecha_inscripcion?: boolean
+    monto?: boolean
     pagado?: boolean
     fecha_pago?: boolean
   }
 
-  export type inscripcionesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_socio" | "id_actividad" | "fecha_inscripcion" | "pagado" | "fecha_pago", ExtArgs["result"]["inscripciones"]>
+  export type inscripcionesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_socio" | "id_actividad" | "fecha_inscripcion" | "monto" | "pagado" | "fecha_pago", ExtArgs["result"]["inscripciones"]>
   export type inscripcionesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     actividades?: boolean | inscripciones$actividadesArgs<ExtArgs>
     socios?: boolean | inscripciones$sociosArgs<ExtArgs>
@@ -3498,6 +3511,7 @@ export namespace Prisma {
       id_socio: number | null
       id_actividad: number | null
       fecha_inscripcion: Date
+      monto: number
       pagado: boolean | null
       fecha_pago: Date | null
     }, ExtArgs["result"]["inscripciones"]>
@@ -3875,6 +3889,7 @@ export namespace Prisma {
     readonly id_socio: FieldRef<"inscripciones", 'Int'>
     readonly id_actividad: FieldRef<"inscripciones", 'Int'>
     readonly fecha_inscripcion: FieldRef<"inscripciones", 'DateTime'>
+    readonly monto: FieldRef<"inscripciones", 'Int'>
     readonly pagado: FieldRef<"inscripciones", 'Boolean'>
     readonly fecha_pago: FieldRef<"inscripciones", 'DateTime'>
   }
@@ -4095,7 +4110,7 @@ export namespace Prisma {
     /**
      * The data needed to create a inscripciones.
      */
-    data?: XOR<inscripcionesCreateInput, inscripcionesUncheckedCreateInput>
+    data: XOR<inscripcionesCreateInput, inscripcionesUncheckedCreateInput>
   }
 
   /**
@@ -6391,6 +6406,7 @@ export namespace Prisma {
     id_socio: 'id_socio',
     id_actividad: 'id_actividad',
     fecha_inscripcion: 'fecha_inscripcion',
+    monto: 'monto',
     pagado: 'pagado',
     fecha_pago: 'fecha_pago'
   };
@@ -6602,6 +6618,7 @@ export namespace Prisma {
     id_socio?: IntNullableFilter<"inscripciones"> | number | null
     id_actividad?: IntNullableFilter<"inscripciones"> | number | null
     fecha_inscripcion?: DateTimeFilter<"inscripciones"> | Date | string
+    monto?: IntFilter<"inscripciones"> | number
     pagado?: BoolNullableFilter<"inscripciones"> | boolean | null
     fecha_pago?: DateTimeNullableFilter<"inscripciones"> | Date | string | null
     actividades?: XOR<ActividadesNullableScalarRelationFilter, actividadesWhereInput> | null
@@ -6613,6 +6630,7 @@ export namespace Prisma {
     id_socio?: SortOrderInput | SortOrder
     id_actividad?: SortOrderInput | SortOrder
     fecha_inscripcion?: SortOrder
+    monto?: SortOrder
     pagado?: SortOrderInput | SortOrder
     fecha_pago?: SortOrderInput | SortOrder
     actividades?: actividadesOrderByWithRelationInput
@@ -6627,6 +6645,7 @@ export namespace Prisma {
     id_socio?: IntNullableFilter<"inscripciones"> | number | null
     id_actividad?: IntNullableFilter<"inscripciones"> | number | null
     fecha_inscripcion?: DateTimeFilter<"inscripciones"> | Date | string
+    monto?: IntFilter<"inscripciones"> | number
     pagado?: BoolNullableFilter<"inscripciones"> | boolean | null
     fecha_pago?: DateTimeNullableFilter<"inscripciones"> | Date | string | null
     actividades?: XOR<ActividadesNullableScalarRelationFilter, actividadesWhereInput> | null
@@ -6638,6 +6657,7 @@ export namespace Prisma {
     id_socio?: SortOrderInput | SortOrder
     id_actividad?: SortOrderInput | SortOrder
     fecha_inscripcion?: SortOrder
+    monto?: SortOrder
     pagado?: SortOrderInput | SortOrder
     fecha_pago?: SortOrderInput | SortOrder
     _count?: inscripcionesCountOrderByAggregateInput
@@ -6655,6 +6675,7 @@ export namespace Prisma {
     id_socio?: IntNullableWithAggregatesFilter<"inscripciones"> | number | null
     id_actividad?: IntNullableWithAggregatesFilter<"inscripciones"> | number | null
     fecha_inscripcion?: DateTimeWithAggregatesFilter<"inscripciones"> | Date | string
+    monto?: IntWithAggregatesFilter<"inscripciones"> | number
     pagado?: BoolNullableWithAggregatesFilter<"inscripciones"> | boolean | null
     fecha_pago?: DateTimeNullableWithAggregatesFilter<"inscripciones"> | Date | string | null
   }
@@ -6899,6 +6920,7 @@ export namespace Prisma {
 
   export type inscripcionesCreateInput = {
     fecha_inscripcion?: Date | string
+    monto: number
     pagado?: boolean | null
     fecha_pago?: Date | string | null
     actividades?: actividadesCreateNestedOneWithoutInscripcionesInput
@@ -6910,12 +6932,14 @@ export namespace Prisma {
     id_socio?: number | null
     id_actividad?: number | null
     fecha_inscripcion?: Date | string
+    monto: number
     pagado?: boolean | null
     fecha_pago?: Date | string | null
   }
 
   export type inscripcionesUpdateInput = {
     fecha_inscripcion?: DateTimeFieldUpdateOperationsInput | Date | string
+    monto?: IntFieldUpdateOperationsInput | number
     pagado?: NullableBoolFieldUpdateOperationsInput | boolean | null
     fecha_pago?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     actividades?: actividadesUpdateOneWithoutInscripcionesNestedInput
@@ -6927,6 +6951,7 @@ export namespace Prisma {
     id_socio?: NullableIntFieldUpdateOperationsInput | number | null
     id_actividad?: NullableIntFieldUpdateOperationsInput | number | null
     fecha_inscripcion?: DateTimeFieldUpdateOperationsInput | Date | string
+    monto?: IntFieldUpdateOperationsInput | number
     pagado?: NullableBoolFieldUpdateOperationsInput | boolean | null
     fecha_pago?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -6935,12 +6960,14 @@ export namespace Prisma {
     id_socio?: number | null
     id_actividad?: number | null
     fecha_inscripcion?: Date | string
+    monto: number
     pagado?: boolean | null
     fecha_pago?: Date | string | null
   }
 
   export type inscripcionesUpdateManyMutationInput = {
     fecha_inscripcion?: DateTimeFieldUpdateOperationsInput | Date | string
+    monto?: IntFieldUpdateOperationsInput | number
     pagado?: NullableBoolFieldUpdateOperationsInput | boolean | null
     fecha_pago?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -6950,6 +6977,7 @@ export namespace Prisma {
     id_socio?: NullableIntFieldUpdateOperationsInput | number | null
     id_actividad?: NullableIntFieldUpdateOperationsInput | number | null
     fecha_inscripcion?: DateTimeFieldUpdateOperationsInput | Date | string
+    monto?: IntFieldUpdateOperationsInput | number
     pagado?: NullableBoolFieldUpdateOperationsInput | boolean | null
     fecha_pago?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -7368,6 +7396,7 @@ export namespace Prisma {
     id_socio?: SortOrder
     id_actividad?: SortOrder
     fecha_inscripcion?: SortOrder
+    monto?: SortOrder
     pagado?: SortOrder
     fecha_pago?: SortOrder
   }
@@ -7376,6 +7405,7 @@ export namespace Prisma {
     id?: SortOrder
     id_socio?: SortOrder
     id_actividad?: SortOrder
+    monto?: SortOrder
   }
 
   export type inscripcionesMaxOrderByAggregateInput = {
@@ -7383,6 +7413,7 @@ export namespace Prisma {
     id_socio?: SortOrder
     id_actividad?: SortOrder
     fecha_inscripcion?: SortOrder
+    monto?: SortOrder
     pagado?: SortOrder
     fecha_pago?: SortOrder
   }
@@ -7392,6 +7423,7 @@ export namespace Prisma {
     id_socio?: SortOrder
     id_actividad?: SortOrder
     fecha_inscripcion?: SortOrder
+    monto?: SortOrder
     pagado?: SortOrder
     fecha_pago?: SortOrder
   }
@@ -7400,6 +7432,7 @@ export namespace Prisma {
     id?: SortOrder
     id_socio?: SortOrder
     id_actividad?: SortOrder
+    monto?: SortOrder
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -8035,6 +8068,7 @@ export namespace Prisma {
 
   export type inscripcionesCreateWithoutActividadesInput = {
     fecha_inscripcion?: Date | string
+    monto: number
     pagado?: boolean | null
     fecha_pago?: Date | string | null
     socios?: sociosCreateNestedOneWithoutInscripcionesInput
@@ -8044,6 +8078,7 @@ export namespace Prisma {
     id?: number
     id_socio?: number | null
     fecha_inscripcion?: Date | string
+    monto: number
     pagado?: boolean | null
     fecha_pago?: Date | string | null
   }
@@ -8081,6 +8116,7 @@ export namespace Prisma {
     id_socio?: IntNullableFilter<"inscripciones"> | number | null
     id_actividad?: IntNullableFilter<"inscripciones"> | number | null
     fecha_inscripcion?: DateTimeFilter<"inscripciones"> | Date | string
+    monto?: IntFilter<"inscripciones"> | number
     pagado?: BoolNullableFilter<"inscripciones"> | boolean | null
     fecha_pago?: DateTimeNullableFilter<"inscripciones"> | Date | string | null
   }
@@ -8319,6 +8355,7 @@ export namespace Prisma {
 
   export type inscripcionesCreateWithoutSociosInput = {
     fecha_inscripcion?: Date | string
+    monto: number
     pagado?: boolean | null
     fecha_pago?: Date | string | null
     actividades?: actividadesCreateNestedOneWithoutInscripcionesInput
@@ -8328,6 +8365,7 @@ export namespace Prisma {
     id?: number
     id_actividad?: number | null
     fecha_inscripcion?: Date | string
+    monto: number
     pagado?: boolean | null
     fecha_pago?: Date | string | null
   }
@@ -8450,12 +8488,14 @@ export namespace Prisma {
   export type inscripcionesCreateManyActividadesInput = {
     id_socio?: number | null
     fecha_inscripcion?: Date | string
+    monto: number
     pagado?: boolean | null
     fecha_pago?: Date | string | null
   }
 
   export type inscripcionesUpdateWithoutActividadesInput = {
     fecha_inscripcion?: DateTimeFieldUpdateOperationsInput | Date | string
+    monto?: IntFieldUpdateOperationsInput | number
     pagado?: NullableBoolFieldUpdateOperationsInput | boolean | null
     fecha_pago?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     socios?: sociosUpdateOneWithoutInscripcionesNestedInput
@@ -8465,6 +8505,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     id_socio?: NullableIntFieldUpdateOperationsInput | number | null
     fecha_inscripcion?: DateTimeFieldUpdateOperationsInput | Date | string
+    monto?: IntFieldUpdateOperationsInput | number
     pagado?: NullableBoolFieldUpdateOperationsInput | boolean | null
     fecha_pago?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -8473,6 +8514,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     id_socio?: NullableIntFieldUpdateOperationsInput | number | null
     fecha_inscripcion?: DateTimeFieldUpdateOperationsInput | Date | string
+    monto?: IntFieldUpdateOperationsInput | number
     pagado?: NullableBoolFieldUpdateOperationsInput | boolean | null
     fecha_pago?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -8522,6 +8564,7 @@ export namespace Prisma {
   export type inscripcionesCreateManySociosInput = {
     id_actividad?: number | null
     fecha_inscripcion?: Date | string
+    monto: number
     pagado?: boolean | null
     fecha_pago?: Date | string | null
   }
@@ -8535,6 +8578,7 @@ export namespace Prisma {
 
   export type inscripcionesUpdateWithoutSociosInput = {
     fecha_inscripcion?: DateTimeFieldUpdateOperationsInput | Date | string
+    monto?: IntFieldUpdateOperationsInput | number
     pagado?: NullableBoolFieldUpdateOperationsInput | boolean | null
     fecha_pago?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     actividades?: actividadesUpdateOneWithoutInscripcionesNestedInput
@@ -8544,6 +8588,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     id_actividad?: NullableIntFieldUpdateOperationsInput | number | null
     fecha_inscripcion?: DateTimeFieldUpdateOperationsInput | Date | string
+    monto?: IntFieldUpdateOperationsInput | number
     pagado?: NullableBoolFieldUpdateOperationsInput | boolean | null
     fecha_pago?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -8552,6 +8597,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     id_actividad?: NullableIntFieldUpdateOperationsInput | number | null
     fecha_inscripcion?: DateTimeFieldUpdateOperationsInput | Date | string
+    monto?: IntFieldUpdateOperationsInput | number
     pagado?: NullableBoolFieldUpdateOperationsInput | boolean | null
     fecha_pago?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }

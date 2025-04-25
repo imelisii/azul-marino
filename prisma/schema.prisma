@@ -29,6 +29,7 @@ model inscripciones {
   id_socio          Int?
   id_actividad      Int?
   fecha_inscripcion DateTime     @default(now()) @db.Date
+  monto             Int          @db.Int
   pagado            Boolean?     @default(false)
   fecha_pago        DateTime?    @db.Date
   actividades       actividades? @relation(fields: [id_actividad], references: [id])

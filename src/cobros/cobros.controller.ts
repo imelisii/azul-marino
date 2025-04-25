@@ -6,16 +6,36 @@ import { UpdateCobroDto } from './dto/update-cobro.dto';
 @Controller('cobros')
 export class CobrosController {
   constructor(private readonly cobrosService: CobrosService) { }
+  @Get()
+  findAll() {
+    return this.cobrosService.findAll();
+  }
 
   @Post()
   create(@Body() createCobroDto: CreateCobroDto) {
     console.log('createCobroDto', createCobroDto);
   }
+  @Post('/partes')
+  createCobro(@Body() createCobroDto: CreateCobroDto) {
+    console.log('CobranzaPartes', createCobroDto);
 
-  @Get()
-  findAll() {
-    return this.cobrosService.findAll();
   }
+
+  @Post("/parte")
+  createCobroParte(@Body() createCobroDto: CreateCobroDto) {
+    console.log('CobranzaParte', createCobroDto);
+
+  }
+
+  @Post('/no-paga-nada')
+  createCobroNoPagaNada(@Body() createCobroDto: CreateCobroDto) {
+    console.log('CobranzaNoPagaNada', createCobroDto);
+
+  }
+
+
+
+
 
   @Get(':id')
   findOne(@Param('id') id: string) {
