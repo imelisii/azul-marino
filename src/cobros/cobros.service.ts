@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateCobroDto } from './dto/create-cobro.dto';
 import { UpdateCobroDto } from './dto/update-cobro.dto';
-import { PrismaClient } from 'generated/prisma';
+import { Carnet, PrismaClient } from 'generated/prisma';
 
 
 @Injectable()
@@ -11,11 +11,16 @@ export class CobrosService extends PrismaClient {
     super()
   }
 
-  async create(createCobroDto: CreateCobroDto) {
+  async pago(createCobroDto: CreateCobroDto) {
     const { socioId, actividadId, metodoPago, aCuentaDe, monto } = createCobroDto;
 
     const actividad = await this.actividades.findUnique({ where: { id: actividadId } })
     const socio = await this.socios.findUnique({ where: { id: socioId } })
+    const carnet = await this.carnet.findFirst({ where: { id_socio: socioId }, orderBy: { fecha: 'desc' } })
+
+    if (carnet) {
+      this.validarCarnetVto(carnet)
+    }
 
     return this.$transaction(async (prisma) => {
       await prisma.inscripciones.create({
@@ -39,7 +44,7 @@ export class CobrosService extends PrismaClient {
     })
   }
 
-  async cobroPartes(createCobranzaDto: CreateCobroDto) {
+  async PagoPartes(createCobranzaDto: CreateCobroDto) {
     const { actividadId, metodoPago, monto, socioId, aCuentaDe, metodoPago2 } = createCobranzaDto;
     const actividad = await this.actividades.findUnique({ where: { id: actividadId } })
     const socio = await this.socios.findUnique({ where: { id: socioId } })
@@ -77,7 +82,7 @@ export class CobrosService extends PrismaClient {
   }
 
 
-  async cobroPagaParte(createCobroDto: CreateCobroDto) {
+  async pagoParte(createCobroDto: CreateCobroDto) {
     const { actividadId, metodoPago, monto, socioId, aCuentaDe } = createCobroDto;
     const actividad = await this.actividades.findUnique({ where: { id: actividadId } })
     const socio = await this.socios.findUnique({ where: { id: socioId } })
@@ -117,6 +122,37 @@ export class CobrosService extends PrismaClient {
   }
 
 
+
+  async noPagaNada(createCobroDto: CreateCobroDto) {
+    const { actividadId, socioId } = createCobroDto;
+    const actividad = await this.actividades.findUnique({ where: { id: actividadId } })
+    const socio = await this.socios.findUnique({ where: { id: socioId } })
+
+    await this.$transaction(async (prisma) => {
+      await prisma.inscripciones.create({
+        data: {
+          monto: 0,
+          id_actividad: actividadId,
+          id_socio: socioId
+        }
+      })
+
+      await prisma.saldos.create({
+        data: {
+          id_socio: socioId,
+          descripcion: `Debe actividad: ${actividad?.descripcion}`,
+          monto: Number(actividad?.precio),
+        }
+      })
+
+    })
+
+
+
+
+  }
+
+
   findAll() {
     return `This action returns all cobros`;
   }
@@ -132,4 +168,15 @@ export class CobrosService extends PrismaClient {
   remove(id: number) {
     return `This action removes a #${id} cobro`;
   }
+
+  private validarCarnetVto(carnet: Carnet) {
+    if (carnet.fecha_vto > new Date()) {
+      throw new BadRequestException(`El socio tiene el carnet vigente hasta ${carnet.fecha_vto}`)
+    }
+
+  }
+
+  
+
+
 }

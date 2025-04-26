@@ -8,46 +8,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model actividades {
+model Actividades {
   id            Int             @id @default(autoincrement())
   nombre        String          @db.VarChar(100)
   descripcion   String?         @db.Text
   precio        Decimal         @db.Decimal(10, 2)
   activa        Boolean?        @default(true)
-  inscripciones inscripciones[]
-  carnet        carnet[]
+  inscripciones Inscripciones[]
+  carnet        Carnet[]
 }
 
-model familias {
-  id             Int      @id @default(autoincrement())
-  nombre_familia String   @db.VarChar(100)
-  fecha_alta     DateTime @default(now()) @db.Date
-  socios         socios[]
+model Familias {
+  id             Int       @id @default(autoincrement())
+  nombre_familia String    @db.VarChar(100)
+  fecha_alta     DateTime  @default(now()) @db.Date
+  socios         Socios[]
 }
 
-model inscripciones {
-  id                Int          @id @default(autoincrement())
+model Inscripciones {
+  id                Int            @id @default(autoincrement())
   id_socio          Int?
   id_actividad      Int?
-  fecha_inscripcion DateTime     @default(now()) @db.Date
-  monto             Int          @db.Int
-  actividades       actividades? @relation(fields: [id_actividad], references: [id])
-  socios            socios?      @relation(fields: [id_socio], references: [id])
+  fecha_inscripcion DateTime       @default(now()) @db.Date
+  monto             Int            @db.Int
+  actividades       Actividades?   @relation(fields: [id_actividad], references: [id])
+  socios            Socios?        @relation(fields: [id_socio], references: [id])
 }
 
-model saldos {
-  id          Int       @id @default(autoincrement())
+model Saldos {
+  id          Int        @id @default(autoincrement())
   id_socio    Int?
-  pagado      Boolean?  @default(false)
-  fecha_pago  DateTime? @db.Date
-  descripcion String    @db.Text
-  monto       Decimal   @db.Decimal(10, 2)
-  fecha       DateTime  @default(now()) @db.Date
-  medioDePago String?   @db.NVarChar(255)
-  socios      socios?   @relation(fields: [id_socio], references: [id])
+  pagado      Boolean?   @default(false)
+  fecha_pago  DateTime?  @db.Date
+  descripcion String     @db.Text
+  monto       Decimal    @db.Decimal(10, 2)
+  fecha       DateTime   @default(now()) @db.Date
+  medioDePago String?    @db.NVarChar(255)
+  socios      Socios?    @relation(fields: [id_socio], references: [id])
 }
 
-model socios {
+model Socios {
   id               Int             @id @default(autoincrement())
   id_familia       Int?
   nombre           String          @db.VarChar(100)
@@ -56,28 +56,28 @@ model socios {
   fecha_nacimiento DateTime?       @db.Date
   celular          String?         @db.NVarChar(50)
   activo           Boolean?        @default(true)
-  inscripciones    inscripciones[]
-  saldos           saldos[]
-  familias         familias?       @relation(fields: [id_familia], references: [id])
-  carnet           carnet[]
+  inscripciones    Inscripciones[]
+  saldos           Saldos[]
+  familias         Familias?       @relation(fields: [id_familia], references: [id])
+  carnet           Carnet[]
 }
 
-model caja {
-  id             Int      @id @default(autoincrement())
-  tipoMovimiento String   @db.VarChar(50)
-  cuenta         String?  @db.VarChar(50)
-  medioPago      String   @db.VarChar(50)
-  fecha          DateTime @default(now()) @db.Date
-  monto          Decimal  @db.Decimal(10, 2)
-  descripcion    String   @db.NVarChar(255)
+model Caja {
+  id             Int       @id @default(autoincrement())
+  tipoMovimiento String    @db.VarChar(50)
+  cuenta         String?   @db.VarChar(50)
+  medioPago      String    @db.VarChar(50)
+  fecha          DateTime  @default(now()) @db.Date
+  monto          Decimal   @db.Decimal(10, 2)
+  descripcion    String    @db.NVarChar(255)
 }
 
-model carnet {
+model Carnet {
   id           Int         @id @default(autoincrement())
   id_socio     Int
   id_actividad Int
   fecha        DateTime    @default(now()) @db.Date
   fecha_vto    DateTime    @db.Date
-  socios       socios      @relation(fields: [id_socio], references: [id])
-  actividades  actividades @relation(fields: [id_actividad], references: [id])
+  socios       Socios      @relation(fields: [id_socio], references: [id])
+  actividades  Actividades @relation(fields: [id_actividad], references: [id])
 }
