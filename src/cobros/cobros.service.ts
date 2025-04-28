@@ -2,12 +2,18 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateCobroDto } from './dto/create-cobro.dto';
 import { UpdateCobroDto } from './dto/update-cobro.dto';
 import { Carnet, PrismaClient } from 'generated/prisma';
+import { PrinterService } from 'src/printer/printer.service';
+import { WhatsappService } from 'src/whatsapp/whatsapp.service';
 
 
 @Injectable()
 export class CobrosService extends PrismaClient {
 
-  constructor() {
+  constructor(
+    private readonly printerService: PrinterService,
+    private readonly whatsappService: WhatsappService,
+
+  ) {
     super()
   }
 
@@ -18,9 +24,9 @@ export class CobrosService extends PrismaClient {
     const socio = await this.socios.findUnique({ where: { id: socioId } })
     const carnet = await this.carnet.findFirst({ where: { id_socio: socioId }, orderBy: { fecha: 'desc' } })
 
-    if (carnet) {
-      this.validarCarnetVto(carnet)
-    }
+    // if (carnet) {
+    //   this.validarCarnetVto(carnet)
+    // }
 
     return this.$transaction(async (prisma) => {
       await prisma.inscripciones.create({
@@ -40,6 +46,33 @@ export class CobrosService extends PrismaClient {
           cuenta: aCuentaDe,
         }
       })
+
+
+      await prisma.carnet.create({
+        data: {
+          id_socio: socioId,
+          id_actividad: actividadId,
+          fecha: new Date(),
+          fecha_vto: new Date(new Date().setDate(new Date().getDate() + 30))
+
+        }
+      })
+
+
+
+      const pdf = await this.printerService.createProfessionalCarnet({
+        nombreApellido: socio?.nombre!,
+        actividad: actividad?.descripcion!,
+        cantidadClases: "8",
+        vencimiento: '12/12/2028',
+      })
+
+      this.whatsappService.sendCarnet(socio?.celular!, pdf)
+
+
+
+
+
       return `Se ha creado la cobranza de ${monto} para el socio ${socio?.nombre} en la actividad ${actividad?.descripcion}`;
     })
   }
@@ -176,7 +209,7 @@ export class CobrosService extends PrismaClient {
 
   }
 
-  
+
 
 
 }

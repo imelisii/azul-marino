@@ -1,7 +1,8 @@
 import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
-import { Buttons, Client, LocalAuth } from 'whatsapp-web.js';
+import { Buttons, Client, LocalAuth, MessageMedia } from 'whatsapp-web.js';
 import * as qrcode from 'qrcode-terminal';
 import { PrismaClient } from '@prisma/client';
+import { Carnet } from 'generated/prisma';
 
 
 
@@ -40,8 +41,20 @@ export class WhatsappService extends PrismaClient implements OnModuleInit {
     }
 
 
-    async sendMessage (message: string, number: string) {
+    async sendMessage(message: string, number: string) {
         this.client.sendMessage(`549${number}@c.us`, message)
+    }
+
+
+    async sendCarnet(tel: string, pdfFile: ArrayBuffer) {
+        const base64PDF = Buffer.from(pdfFile).toString('base64');
+        const media = new MessageMedia(
+            'application/pdf',
+            base64PDF,
+            'carnet.pdf',
+        );
+
+        await this.client.sendMessage(`549${tel}@c.us`, media, { caption: "Carnet Prueba 2" })
     }
 
 
