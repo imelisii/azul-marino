@@ -109,6 +109,30 @@ export class CobrosService extends PrismaClient {
           cuenta: aCuentaDe,
         }
       })
+
+      await prisma.carnet.create({
+        data: {
+          id_socio: socioId,
+          id_actividad: actividadId,
+          fecha: new Date(),
+          fecha_vto: new Date(new Date().setDate(new Date().getDate() + 30))
+
+        }
+      })
+
+
+
+      const pdf = await this.printerService.createProfessionalCarnet({
+        nombreApellido: socio?.nombre!,
+        actividad: actividad?.descripcion!,
+        cantidadClases: "8",
+        vencimiento: '12/12/2028',
+      })
+
+      this.whatsappService.sendCarnet(socio?.celular!, pdf)
+
+
+
       return `Se ha creado la cobranza de ${monto} para el socio ${socio?.nombre} en la actividad ${actividad?.descripcion}`;
     })
 
@@ -119,6 +143,8 @@ export class CobrosService extends PrismaClient {
     const { actividadId, metodoPago, monto, socioId, aCuentaDe } = createCobroDto;
     const actividad = await this.actividades.findUnique({ where: { id: actividadId } })
     const socio = await this.socios.findUnique({ where: { id: socioId } })
+
+    const resto = Number(actividad?.precio) - monto
 
     return this.$transaction(async (prisma) => {
       await prisma.inscripciones.create({
@@ -143,10 +169,35 @@ export class CobrosService extends PrismaClient {
         data: {
           id_socio: socioId,
           descripcion: `Debe parte de cuota de ${actividad?.descripcion}`,
-          monto: Number(actividad?.precio) - monto,
+          monto: resto,
           medioDePago: metodoPago,
         }
       })
+
+
+      await prisma.carnet.create({
+        data: {
+          id_socio: socioId,
+          id_actividad: actividadId,
+          fecha: new Date(),
+          fecha_vto: new Date(new Date().setDate(new Date().getDate() + 30))
+
+        }
+      })
+
+
+
+      const pdf = await this.printerService.createProfessionalCarnet({
+        nombreApellido: socio?.nombre!,
+        actividad: actividad?.descripcion!,
+        cantidadClases: "8",
+        vencimiento: '12/12/2028',
+      })
+
+      this.whatsappService.sendCarnet(socio?.celular!, pdf)
+      this.whatsappService.sendMessage(`Hola ${socio?.nombre}, se ha creado la cobranza  en la actividad ${actividad?.nombre}, adeuda ${resto} de la cuota`, socio?.celular! )
+
+
 
 
 
@@ -178,7 +229,31 @@ export class CobrosService extends PrismaClient {
         }
       })
 
+      await prisma.carnet.create({
+        data: {
+          id_socio: socioId,
+          id_actividad: actividadId,
+          fecha: new Date(),
+          fecha_vto: new Date(new Date().setDate(new Date().getDate() + 30))
+
+        }
+      })
+
+
+
+      const pdf = await this.printerService.createProfessionalCarnet({
+        nombreApellido: socio?.nombre!,
+        actividad: actividad?.descripcion!,
+        cantidadClases: "8",
+        vencimiento: '12/12/2028',
+      })
+
+      this.whatsappService.sendCarnet(socio?.celular!, pdf)
+      this.whatsappService.sendMessage(`Hola ${socio?.nombre}, se ha creado la cobranza  en la actividad ${actividad?.nombre}, adeuda ${actividad?.precio} de la cuota`, socio?.celular! )
+
     })
+
+
 
 
 

@@ -17,19 +17,19 @@ export class CobrosController {
   }
   @Post('/partes')
   createCobro(@Body() createCobroDto: CreateCobroDto) {
-    console.log('CobranzaPartes', createCobroDto);
+   return this.cobrosService.PagoPartes(createCobroDto);
 
   }
 
   @Post("/parte")
   createCobroParte(@Body() createCobroDto: CreateCobroDto) {
-    console.log('CobranzaParte', createCobroDto);
+   return this.cobrosService.pagoParte(createCobroDto);
 
   }
 
   @Post('/no-paga-nada')
   createCobroNoPagaNada(@Body() createCobroDto: CreateCobroDto) {
-    console.log('CobranzaNoPagaNada', createCobroDto);
+    return this.cobrosService.noPagaNada(createCobroDto);
 
   }
 
