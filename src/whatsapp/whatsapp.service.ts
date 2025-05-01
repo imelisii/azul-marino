@@ -1,15 +1,14 @@
 import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
 import { Buttons, Client, LocalAuth, MessageMedia } from 'whatsapp-web.js';
 import * as qrcode from 'qrcode-terminal';
-import { PrismaClient } from '@prisma/client';
-import { Carnet } from 'generated/prisma';
+import { Carnet, PrismaClient } from 'generated/prisma';
 
 
 
 @Injectable()
 export class WhatsappService extends PrismaClient implements OnModuleInit {
     async onModuleInit() {
-        await this.client.initialize();
+       // await this.client.initialize();
     }
 
     private readonly client: Client;
@@ -21,7 +20,7 @@ export class WhatsappService extends PrismaClient implements OnModuleInit {
         this.client = new Client({
             authStrategy: new LocalAuth(),
             puppeteer: {
-
+                args: ['--no-sandbox'],
                 headless: true
             },
         });
