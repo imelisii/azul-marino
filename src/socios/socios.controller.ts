@@ -5,10 +5,11 @@ import { UpdateSocioDto } from './dto/update-socio.dto';
 
 @Controller('socios')
 export class SociosController {
-  constructor(private readonly sociosService: SociosService) {}
+  constructor(private readonly sociosService: SociosService) { }
 
   @Post()
   create(@Body() createSocioDto: CreateSocioDto) {
+
     return this.sociosService.create(createSocioDto);
   }
 

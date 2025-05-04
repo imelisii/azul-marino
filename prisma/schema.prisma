@@ -19,37 +19,37 @@ model Actividades {
 }
 
 model Familias {
-  id             Int       @id @default(autoincrement())
-  nombre_familia String    @db.VarChar(100)
-  fecha_alta     DateTime  @default(now()) @db.Date
+  id             Int      @id @default(autoincrement())
+  nombre_familia String   @db.VarChar(100)
+  fecha_alta     DateTime @default(now()) @db.Date
   socios         Socios[]
 }
 
 model Inscripciones {
-  id                Int            @id @default(autoincrement())
+  id                Int          @id @default(autoincrement())
   id_socio          Int?
   id_actividad      Int?
-  fecha_inscripcion DateTime       @default(now()) @db.Date
-  monto             Int            @db.Int
-  actividades       Actividades?   @relation(fields: [id_actividad], references: [id])
-  socios            Socios?        @relation(fields: [id_socio], references: [id])
+  fecha_inscripcion DateTime     @default(now()) @db.Date
+  monto             Int          @db.Int
+  actividades       Actividades? @relation(fields: [id_actividad], references: [id])
+  socios            Socios?      @relation(fields: [id_socio], references: [id])
 }
 
 model Saldos {
-  id          Int        @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   id_socio    Int?
-  pagado      Boolean?   @default(false)
-  fecha_pago  DateTime?  @db.Date
-  descripcion String     @db.Text
-  monto       Decimal    @db.Decimal(10, 2)
-  fecha       DateTime   @default(now()) @db.Date
-  medioDePago String?    @db.NVarChar(255)
-  socios      Socios?    @relation(fields: [id_socio], references: [id])
+  pagado      Boolean?  @default(false)
+  fecha_pago  DateTime? @db.Date
+  descripcion String    @db.Text
+  monto       Int       @db.Int
+  fecha       DateTime  @default(now()) @db.Date
+  medioDePago String?   @db.NVarChar(255)
+  socios      Socios?   @relation(fields: [id_socio], references: [id])
 }
 
 model Socios {
   id               Int             @id @default(autoincrement())
-  id_familia       Int?
+  id_familia       Int?        
   nombre           String          @db.VarChar(100)
   apellido         String          @db.VarChar(100)
   dni              String          @unique @db.VarChar(20)
@@ -63,13 +63,13 @@ model Socios {
 }
 
 model Caja {
-  id             Int       @id @default(autoincrement())
-  tipoMovimiento String    @db.VarChar(50)
-  cuenta         String?   @db.VarChar(50)
-  medioPago      String    @db.VarChar(50)
-  fecha          DateTime  @default(now()) @db.Date
-  monto          Decimal   @db.Decimal(10, 2)
-  descripcion    String    @db.NVarChar(255)
+  id             Int      @id @default(autoincrement())
+  tipoMovimiento String   @db.VarChar(50)
+  cuenta         String?  @db.VarChar(50)
+  medioPago      String   @db.VarChar(50)
+  fecha          DateTime @default(now()) @db.Date
+  monto          Decimal  @db.Decimal(10, 2)
+  descripcion    String   @db.NVarChar(255)
 }
 
 model Carnet {

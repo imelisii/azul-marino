@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateSocioDto } from './dto/create-socio.dto';
 import { UpdateSocioDto } from './dto/update-socio.dto';
 import { PrismaClient } from 'generated/prisma';
@@ -6,8 +6,50 @@ import { PrismaClient } from 'generated/prisma';
 
 @Injectable()
 export class SociosService extends PrismaClient {
-  create(createSocioDto: CreateSocioDto) {
-    return 'This action adds a new socio';
+  async create(createSocioDto: CreateSocioDto) {
+    const { id_familia, nombre, apellido, dni, fecha_nacimiento, celular } = createSocioDto;
+
+    const existeSocio = await this.socios.findFirst({
+      where: { dni }
+    })
+
+
+    if (existeSocio) throw new BadRequestException(`El socio con el DNI ${dni} ya existe`)
+
+
+    return this.$transaction(async (prisma) => {
+      const idFamilia = id_familia ? id_familia : (await prisma.familias.create({
+        data: {
+          nombre_familia: `Familia ${apellido}`,
+
+        },
+
+      })).id;
+
+
+      const newSocio = await prisma.socios.create({
+        data: {
+          id_familia: idFamilia,
+          nombre,
+          apellido,
+          dni,
+          fecha_nacimiento,
+          celular,
+        }
+      })
+      return newSocio
+    }
+
+    )
+
+
+
+
+
+
+
+
+
   }
 
   findAll() {
@@ -25,6 +67,7 @@ export class SociosService extends PrismaClient {
             descripcion: true,
             fecha: true,
             medioDePago: true,
+            pagado: false,
           },
         },
         inscripciones: {
@@ -51,12 +94,16 @@ export class SociosService extends PrismaClient {
       descripcion: insc.actividades?.descripcion,
       fecha: insc.fecha_inscripcion,
       monto: insc.monto,
-      
+
     }));
+
+
+
 
     return {
       saldos: socio?.saldos,
       inscripciones: inscripcionesPlanas,
+      deudas: socio?.saldos.reduce((acc, saldo) => acc + saldo.monto, 0),
     };
   }
 
