@@ -1,0 +1,10 @@
+services:
+  backend:
+    container_name: AzulMarinoBack
+    image: azul-marino:0.0.1
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - PORT=${PORT}
+      - DATABASE_URL=${DATABASE_URL}
+    command: npm run start:dev
