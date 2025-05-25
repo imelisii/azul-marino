@@ -7,7 +7,7 @@ import { PrismaClient } from 'generated/prisma';
 @Injectable()
 export class SociosService extends PrismaClient {
   async create(createSocioDto: CreateSocioDto) {
-    const { id_familia, nombre, apellido, dni, fecha_nacimiento, celular } = createSocioDto;
+    const { id_familia, nombre, apellido, dni, fecha_nacimiento, celular, direccion, localidad, telefono, madre, padre, telefono_madre, telefono_padre, mail } = createSocioDto;
 
     const existeSocio = await this.socios.findFirst({
       where: { dni }
@@ -35,6 +35,14 @@ export class SociosService extends PrismaClient {
           dni,
           fecha_nacimiento,
           celular,
+          direccion,
+          localidad,
+          telefono,
+          madre,
+          telefono_madre,
+          padre,
+          telefono_padre,
+          mail,
         }
       })
       return newSocio
@@ -60,6 +68,18 @@ export class SociosService extends PrismaClient {
     const socio = await this.socios.findUnique({
       where: { id },
       select: {
+        nombre: true,
+        apellido: true,
+        dni: true,
+        celular: true,
+        direccion: true,
+        localidad: true,
+        telefono: true,
+        madre: true,
+        telefono_madre: true,
+        padre: true,
+        telefono_padre: true,
+        mail: true,
         saldos: {
           select: {
             id: true,
@@ -94,13 +114,21 @@ export class SociosService extends PrismaClient {
       descripcion: insc.actividades?.descripcion,
       fecha: insc.fecha_inscripcion,
       monto: insc.monto,
-
     }));
 
-
-
-
     return {
+      nombre: socio?.nombre,
+      apellido: socio?.apellido,
+      dni: socio?.dni,
+      direccion: socio?.direccion,
+      localidad: socio?.localidad,
+      telefono: socio?.telefono,
+      madre: socio?.madre,
+      telefono_madre: socio?.telefono_madre,
+      padre: socio?.padre,
+      telefono_padre: socio?.telefono_padre,
+      mail: socio?.mail,
+      celular: socio?.celular,
       saldos: socio?.saldos,
       inscripciones: inscripcionesPlanas,
       deudas: socio?.saldos.reduce((acc, saldo) => acc + saldo.monto, 0),

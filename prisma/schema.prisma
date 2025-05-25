@@ -55,6 +55,14 @@ model Socios {
   dni              String          @unique @db.VarChar(20)
   fecha_nacimiento DateTime?       @db.Date
   celular          String?         @db.NVarChar(50)
+  direccion        String?         @db.NVarChar(255)
+  localidad        String?         @db.NVarChar(100)
+  telefono         String?         @db.NVarChar(50)
+  madre            String?         @db.NVarChar(100)
+  telefono_madre   String?         @db.NVarChar(50)
+  padre            String?         @db.NVarChar(100)
+  telefono_padre   String?         @db.NVarChar(50)
+  mail             String?         @db.NVarChar(100)
   activo           Boolean?        @default(true)
   inscripciones    Inscripciones[]
   saldos           Saldos[]
