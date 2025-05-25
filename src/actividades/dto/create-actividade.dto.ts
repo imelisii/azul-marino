@@ -1,4 +1,4 @@
-import { IsBoolean, IsNumber, isNumber, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, isNumber, IsOptional, IsString } from 'class-validator';
 
 
 export class CreateActividadeDto {
@@ -7,7 +7,8 @@ export class CreateActividadeDto {
     nombre: string;
 
     @IsString()
-    descripcion: string;
+    @IsOptional()
+    descripcion?: string;
 
     @IsNumber()
     precio: number;
