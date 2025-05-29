@@ -43,7 +43,6 @@ model Saldos {
   descripcion String    @db.Text
   monto       Int       @db.Int
   fecha       DateTime  @default(now()) @db.Date
-  medioDePago String?   @db.NVarChar(255)
   socios      Socios?   @relation(fields: [id_socio], references: [id])
 }
 

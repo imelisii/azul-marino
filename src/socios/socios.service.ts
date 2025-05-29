@@ -81,13 +81,13 @@ export class SociosService extends PrismaClient {
         telefono_padre: true,
         mail: true,
         saldos: {
+          where: { pagado: false },
           select: {
             id: true,
             monto: true,
             descripcion: true,
             fecha: true,
-            medioDePago: true,
-            pagado: false,
+            pagado: true,
           },
         },
         inscripciones: {
