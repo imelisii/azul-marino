@@ -46,7 +46,7 @@ export class CobrosService extends PrismaClient {
           descripcion: `PAGA cuota de ${actividad?.nombre} socio: ${socio?.nombre}`,
           tipoMovimiento: 'INGRESO',
           cuenta: aCuentaDe,
-          fecha: this.getUTCDate(), // Ajuste a UTC
+          fecha: this.getUTCDate(),  
         }
       })
       await prisma.carnet.create({

@@ -48,7 +48,7 @@ model Saldos {
 
 model Socios {
   id               Int             @id @default(autoincrement())
-  id_familia       Int?        
+  id_familia       Int?
   nombre           String          @db.VarChar(100)
   apellido         String          @db.VarChar(100)
   dni              String          @unique @db.VarChar(20)
@@ -75,7 +75,7 @@ model Caja {
   cuenta         String?  @db.VarChar(50)
   medioPago      String   @db.VarChar(50)
   fecha          DateTime @default(now()) @db.Date
-  monto          Decimal  @db.Decimal(10, 2)
+  monto          Int      @db.Int
   descripcion    String   @db.NVarChar(255)
 }
 
