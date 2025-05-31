@@ -37,4 +37,8 @@ export class CajaService extends PrismaClient {
   remove(id: number) {
     return `This action removes a #${id} caja`;
   }
+
+  async getClaveCaja() {
+    return 
+  }
 }

@@ -7,11 +7,13 @@ import { CobrosModule } from './cobros/cobros.module';
 import { SeedModule } from './seed/seed.module';
 import { PrinterModule } from './printer/printer.module';
 import { CajaModule } from './caja/caja.module';
+import { AuthModule } from './auth/auth.module';
+
 
 
 @Module({
-  imports: [SociosModule, ActividadesModule, CobrosModule, SeedModule, PrinterModule, CajaModule],
+  imports: [SociosModule, ActividadesModule, CobrosModule, SeedModule, PrinterModule, CajaModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
