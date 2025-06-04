@@ -21,9 +21,10 @@ export class UseRoleGuard implements CanActivate {
 
     const req = context.switchToHttp().getRequest();
     const user = req.user 
+
     if (!user) throw new BadGatewayException("Usuario inexistente")
     for (const role of validRoles) {
-      if (role === user.role) return true;
+      if (role === user.rol) return true;
     }
 
 

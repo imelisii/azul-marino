@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { CajaService } from './caja.service';
 import { CajaController } from './caja.controller';
-import { PassportModule } from '@nestjs/passport';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [PassportModule],
+  imports: [AuthModule],
   controllers: [CajaController],
   providers: [CajaService],
 })

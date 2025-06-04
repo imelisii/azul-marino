@@ -1,13 +1,34 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateCajaDto } from './dto/create-caja.dto';
 import { UpdateCajaDto } from './dto/update-caja.dto';
 import { PrismaClient } from 'generated/prisma';
 import { FechasDto } from './dto/fechas.dto';
+import { ingresoCajaDto } from './dto/ingreso-caja.dto';
+import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
 export class CajaService extends PrismaClient {
-  create(createCajaDto: CreateCajaDto) {
-    return 'This action adds a new caja';
+
+  constructor(private readonly authSerivce: AuthService) {
+    super();
+  }
+
+
+  async create(claveCaja: ingresoCajaDto) {
+
+    const usuario = await this.usuario.findUnique({
+      where: {
+        password: claveCaja.clave,
+        username: claveCaja.usuario,
+      }
+    })
+
+    if (!usuario?.id) return new BadRequestException(`Usuario o clave incorrectos`);
+
+    return {
+      user: usuario,
+      token: this.authSerivce.getJWT({ id: usuario.id }),
+    }
   }
 
   async findAll(fechas: FechasDto) {
@@ -39,6 +60,6 @@ export class CajaService extends PrismaClient {
   }
 
   async getClaveCaja() {
-    return 
+    return
   }
 }

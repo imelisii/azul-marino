@@ -21,7 +21,7 @@ export class AuthService extends PrismaClient {
     return this.usuario.findFirst({ where: { username: email, password: password } })
   }
 
-  private getJWT(payload: JwtPayload): string {
+  public getJWT(payload: JwtPayload): string {
 
     const token = this.jwtService.sign(payload);
     return token
@@ -38,7 +38,7 @@ export class AuthService extends PrismaClient {
 
     return {
       ...user,
-      token: this.getJWT({ id: user.id, role: user.rol })
+      token: this.getJWT({ id: user.id })
     }
   }
 
