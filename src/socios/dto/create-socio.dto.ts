@@ -26,7 +26,35 @@ export class CreateSocioDto {
     @IsString()
     celular: string;
 
+    @IsString()
+    direccion: string;
 
+    @IsString()
+    @IsOptional()
+    localidad?: string;
 
+    @IsString()
+    @IsOptional()
+    telefono?: string;
+
+    @IsString()
+    @IsOptional()
+    madre?: string;
+
+    @IsString()
+    @IsOptional()
+    telefono_madre?: string;
+
+    @IsString()
+    @IsOptional()
+    padre?: string;
+
+    @IsString()
+    @IsOptional()
+    telefono_padre?: string;
+
+    @IsString()
+    @IsOptional()
+    mail?: string;
 
 }

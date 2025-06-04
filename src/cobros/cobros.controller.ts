@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CobrosService } from './cobros.service';
 import { CreateCobroDto } from './dto/create-cobro.dto';
 import { UpdateCobroDto } from './dto/update-cobro.dto';
+import { CobrarDeudaDto } from './dto/cobrar-deuda.dto';
 
 @Controller('cobros')
 export class CobrosController {
@@ -17,19 +18,25 @@ export class CobrosController {
   }
   @Post('/partes')
   createCobro(@Body() createCobroDto: CreateCobroDto) {
-   return this.cobrosService.PagoPartes(createCobroDto);
+    return this.cobrosService.PagoPartes(createCobroDto);
 
   }
 
   @Post("/parte")
   createCobroParte(@Body() createCobroDto: CreateCobroDto) {
-   return this.cobrosService.pagoParte(createCobroDto);
+    return this.cobrosService.pagoParte(createCobroDto);
 
   }
 
   @Post('/no-paga-nada')
   createCobroNoPagaNada(@Body() createCobroDto: CreateCobroDto) {
     return this.cobrosService.noPagaNada(createCobroDto);
+
+  }
+
+  @Post("/cobrar-deuda")
+  createCobroDeuda(@Body() cobrarDedua: CobrarDeudaDto) {
+    return this.cobrosService.cobrarDeuda(cobrarDedua);
 
   }
 

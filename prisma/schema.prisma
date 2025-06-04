@@ -43,18 +43,25 @@ model Saldos {
   descripcion String    @db.Text
   monto       Int       @db.Int
   fecha       DateTime  @default(now()) @db.Date
-  medioDePago String?   @db.NVarChar(255)
   socios      Socios?   @relation(fields: [id_socio], references: [id])
 }
 
 model Socios {
   id               Int             @id @default(autoincrement())
-  id_familia       Int?        
+  id_familia       Int?
   nombre           String          @db.VarChar(100)
   apellido         String          @db.VarChar(100)
   dni              String          @unique @db.VarChar(20)
   fecha_nacimiento DateTime?       @db.Date
   celular          String?         @db.NVarChar(50)
+  direccion        String?         @db.NVarChar(255)
+  localidad        String?         @db.NVarChar(100)
+  telefono         String?         @db.NVarChar(50)
+  madre            String?         @db.NVarChar(100)
+  telefono_madre   String?         @db.NVarChar(50)
+  padre            String?         @db.NVarChar(100)
+  telefono_padre   String?         @db.NVarChar(50)
+  mail             String?         @db.NVarChar(100)
   activo           Boolean?        @default(true)
   inscripciones    Inscripciones[]
   saldos           Saldos[]
@@ -68,7 +75,7 @@ model Caja {
   cuenta         String?  @db.VarChar(50)
   medioPago      String   @db.VarChar(50)
   fecha          DateTime @default(now()) @db.Date
-  monto          Decimal  @db.Decimal(10, 2)
+  monto          Int      @db.Int
   descripcion    String   @db.NVarChar(255)
 }
 
@@ -80,4 +87,15 @@ model Carnet {
   fecha_vto    DateTime    @db.Date
   socios       Socios      @relation(fields: [id_socio], references: [id])
   actividades  Actividades @relation(fields: [id_actividad], references: [id])
+}
+
+model Usuario {
+  id       Int      @id @default(autoincrement())
+  username String   @unique @db.VarChar(50)
+  password String   @db.VarChar(255)
+  email    String?  @unique @db.VarChar(100)
+  nombre   String?  @db.VarChar(100)
+  apellido String?  @db.VarChar(100)
+  rol      String   @db.VarChar(50)
+  activo   Boolean @default(true)
 }
