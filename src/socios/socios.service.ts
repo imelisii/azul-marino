@@ -1,11 +1,20 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { CreateSocioDto } from './dto/create-socio.dto';
 import { UpdateSocioDto } from './dto/update-socio.dto';
 import { PrismaClient } from 'generated/prisma';
 
 
 @Injectable()
-export class SociosService extends PrismaClient {
+export class SociosService extends PrismaClient implements OnModuleInit {
+  private readonly logger: Logger = new Logger("SociosService");
+
+
+
+async onModuleInit() {
+  await this.$connect()
+   this.logger.log("Conectado a la base de datos")
+
+  }
   async create(createSocioDto: CreateSocioDto) {
     const { id_familia, nombre, apellido, dni, fecha_nacimiento, celular, direccion, localidad, telefono, madre, padre, telefono_madre, telefono_padre, mail } = createSocioDto;
 

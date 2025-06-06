@@ -57,4 +57,9 @@ export class CreateSocioDto {
     @IsOptional()
     mail?: string;
 
+    @IsOptional()
+    @IsString()
+    familiar:string
+
+
 }
