@@ -8,7 +8,7 @@ import { Carnet, PrismaClient } from 'generated/prisma';
 @Injectable()
 export class WhatsappService extends PrismaClient implements OnModuleInit {
     async onModuleInit() {
-       // await this.client.initialize();
+        await this.client.initialize();
     }
 
     private readonly client: Client;

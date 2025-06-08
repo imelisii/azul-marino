@@ -23,7 +23,7 @@ export class CajaService extends PrismaClient {
       }
     })
 
-    if (!usuario?.id) return new BadRequestException(`Usuario o clave incorrectos`);
+    if (!usuario?.id)  throw new BadRequestException(`Usuario o clave incorrectos`);
 
     return {
       user: usuario,

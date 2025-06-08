@@ -55,4 +55,3 @@ RUN npm run build
 
 EXPOSE ${PORT}
 
-CMD ["node", "dist/main"]

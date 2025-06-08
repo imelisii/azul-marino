@@ -71,7 +71,7 @@ export class CobrosService extends PrismaClient {
         vencimiento: '12/12/2028',
       })
 
-      // this.whatsappService.sendCarnet(socio?.celular!, pdf)
+       this.whatsappService.sendCarnet(socio?.celular!, pdf)
 
 
 
@@ -139,7 +139,7 @@ export class CobrosService extends PrismaClient {
         vencimiento: '12/12/2028',
       })
 
-      // this.whatsappService.sendCarnet(socio?.celular!, pdf)
+       this.whatsappService.sendCarnet(socio?.celular!, pdf)
 
 
 
@@ -208,8 +208,8 @@ export class CobrosService extends PrismaClient {
         vencimiento: '12/12/2028',
       })
 
-      // this.whatsappService.sendCarnet(socio?.celular!, pdf)
-      // this.whatsappService.sendMessage(`Hola ${socio?.nombre}, se ha creado la cobranza  en la actividad ${actividad?.nombre}, adeuda ${resto} de la cuota`, socio?.celular! )
+       this.whatsappService.sendCarnet(socio?.celular!, pdf)
+       this.whatsappService.sendMessage(`Hola ${socio?.nombre}, se ha creado la cobranza  en la actividad ${actividad?.nombre}, adeuda ${resto} de la cuota`, socio?.celular! )
 
 
 
@@ -278,8 +278,8 @@ export class CobrosService extends PrismaClient {
         vencimiento: '12/12/2028',
       })
 
-      // this.whatsappService.sendCarnet(socio?.celular!, pdf)
-      // this.whatsappService.sendMessage(`Hola ${socio?.nombre}, se ha creado la cobranza  en la actividad ${actividad?.nombre}, adeuda ${actividad?.precio} de la cuota`, socio?.celular! )
+       this.whatsappService.sendCarnet(socio?.celular!, pdf)
+       this.whatsappService.sendMessage(`Hola ${socio?.nombre}, se ha creado la cobranza  en la actividad ${actividad?.nombre}, adeuda ${actividad?.precio} de la cuota`, socio?.celular! )
     })
     return `Se genero la deuda de ${actividad?.precio} para el socio ${socio?.nombre} en la actividad ${actividad?.descripcion}`;
   }
